@@ -14,27 +14,21 @@ import org.spongepowered.api.world.Location;
 
 import java.util.List;
 
-public class SetWarp implements CommandCallable {
+public class RemoveWarp implements CommandCallable {
     @Override
     public CommandResult process(CommandSource commandSource, String s) throws CommandException {
-        if (commandSource instanceof Player) {
-            Player player = (Player) commandSource;
+        if(commandSource.hasPermission("warpl.removewarp")) {
+            WarpsManager warpsManager = Warpl.getWarpsManager();
 
-            if(player.hasPermission("warpl.set")) {
-                String[] args = s.split("\\s+");
-                String warpName = args[0];
+            String[] args = s.split("\\s+");
+            String warpName = args[0];
 
-                WarpsManager warpsManager = Warpl.getWarpsManager();
-                Location location = player.getLocation();
-                warpsManager.setWarp(warpName, location);
+            warpsManager.removeWarp(warpName);
 
-                commandSource.sendMessage(Texts.of(Warpl.NAME + " Set warp '" + warpName + "' to current location"));
-                Warpl.saveWarps();
-            } else {
-                commandSource.sendMessage(Texts.of(Warpl.NAME + " You do not have permission to use this command!"));
-            }
+            commandSource.sendMessage(Texts.of(Warpl.NAME + " Warp " + warpName + " has been removed"));
+            Warpl.saveWarps();
         } else {
-            commandSource.sendMessage(Texts.of(Warpl.NAME + " You are not a player, and therefore cannot use this command"));
+            commandSource.sendMessage(Texts.of(Warpl.NAME + " You do not have permission to use this command!"));
         }
 
         return CommandResult.success();
@@ -52,7 +46,7 @@ public class SetWarp implements CommandCallable {
 
     @Override
     public Optional<Text> getShortDescription(CommandSource commandSource) {
-        Text message = Texts.of("Set warps. Admin command");
+        Text message = Texts.of("Removes warp. Admin command");
         return Optional.of(message);
     }
 
@@ -63,7 +57,7 @@ public class SetWarp implements CommandCallable {
 
     @Override
     public Text getUsage(CommandSource commandSource) {
-        Text message = Texts.of("/setwarp [name]");
+        Text message = Texts.of("/removewarp [name]");
         return message;
     }
 }

@@ -14,6 +14,10 @@ public class WarpsManager {
         locations.put(name, WarpLocation.convert(location));
     }
 
+    public void removeWarp(String name) {
+        locations.remove(name);
+    }
+
     public WarpLocation getWarp(String name) {
         return locations.get(name);
     }

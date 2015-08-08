@@ -1,5 +1,6 @@
 package com.daexsys.warpl;
 
+import com.daexsys.warpl.commands.RemoveWarp;
 import com.daexsys.warpl.commands.SetWarp;
 import com.daexsys.warpl.commands.Warp;
 import com.daexsys.warpl.commands.WarpList;
@@ -13,7 +14,7 @@ import org.spongepowered.api.plugin.Plugin;
 import java.io.*;
 import java.util.logging.Logger;
 
-@Plugin(id = "warpl", name = "Warpl", version = "1.0")
+@Plugin(id = "warpl", name = "Warpl", version = "1.1")
 public class Warpl {
     public static Game game;
 
@@ -39,6 +40,7 @@ public class Warpl {
         event.getGame().getCommandDispatcher().register(this, new Warp(), "warp");
         event.getGame().getCommandDispatcher().register(this, new SetWarp(), "setwarp");
         event.getGame().getCommandDispatcher().register(this, new WarpList(), "warplist");
+        event.getGame().getCommandDispatcher().register(this, new RemoveWarp(), "removewarp");
     }
 
     public static WarpsManager getWarpsManager() {
