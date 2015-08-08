@@ -20,14 +20,18 @@ public class SetWarp implements CommandCallable {
         if (commandSource instanceof Player) {
             Player player = (Player) commandSource;
 
-            String[] args = s.split("\\s+");
-            String warpName = args[0];
+            if(player.hasPermission("warpl.set")) {
+                String[] args = s.split("\\s+");
+                String warpName = args[0];
 
-            WarpsManager warpsManager = Warpl.getWarpsManager();
-            Location location = player.getLocation();
-            warpsManager.setWarp(warpName, location);
+                WarpsManager warpsManager = Warpl.getWarpsManager();
+                Location location = player.getLocation();
+                warpsManager.setWarp(warpName, location);
 
-            commandSource.sendMessage(Texts.of(Warpl.NAME + " Set warp '" + warpName + "' to current location"));
+                commandSource.sendMessage(Texts.of(Warpl.NAME + " Set warp '" + warpName + "' to current location"));
+            } else {
+                commandSource.sendMessage(Texts.of(Warpl.NAME + " You do not have permission to use this command!"));
+            }
             Warpl.saveWarps();
         } else {
             commandSource.sendMessage(Texts.of(Warpl.NAME + " You are not a player, and therefore cannot use this command"));
